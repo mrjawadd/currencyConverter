@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 90%;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"], select {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: #6c5ce7;
+            box-shadow: 0 0 8px rgba(108, 92, 231, 0.4);
+            outline: none;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin-top: 15px;
+            background: #6c5ce7;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #341f97;
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #6c5ce7;
+            animation: fadeInResult 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInResult {
+            from {opacity: 0; transform: scale(0.95);}
+            to {opacity: 1; transform: scale(1);}
+        }
+
+        label {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Responsive for mobile */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            input[type="text"], select {
+                width: 90%;
+            }
+
+            button {
+                width: 90%;
+            }
+        }
+
+        /* Add small currency icon before labels */
+        label::before {
+            content: "\f155"; /* FontAwesome money icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-right: 5px;
+            color: #6c5ce7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-coins"></i> Currency Converter</h1>
+        <form method="POST">
+            <input type="text" name="amount" placeholder="Amount" required><br>
+
+            <select name="from_currency" required>
+                {% for code in currencies %}
+                    <option value="{{ code }}">{{ code }}</option>
+                {% endfor %}
+            </select>
+            <label>From Currency</label><br>
+
+            <select name="to_currency" required>
+                {% for code in currencies %}
+                    <option value="{{ code }}">{{ code }}</option>
+                {% endfor %}
+            </select>
+            <label>To Currency</label><br>
+
+            <button type="submit"><i class="fas fa-exchange-alt"></i> Convert</button>
+        </form>
+
+        {% if result %}
+            <div class="result"><i class="fas fa-hand-holding-usd"></i> {{ result }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
